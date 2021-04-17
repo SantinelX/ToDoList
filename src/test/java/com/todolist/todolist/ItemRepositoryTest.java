@@ -35,9 +35,9 @@ public class ItemRepositoryTest {
     public void testUpdateOfItem() {
         Item item = new Item("itemName", "itemDescription", ItemStatus.NOT_STARTED);
         Item dbItem = itemRepository.save(item);
-        dbItem.setItemStatus(ItemStatus.IN_PROGRES);
+        dbItem.setItemStatus(ItemStatus.IN_PROGRESS);
         Item updatedItem = itemRepository.save(dbItem);
-        assertEquals(ItemStatus.IN_PROGRES, updatedItem.getItemStatus());
+        assertEquals(ItemStatus.IN_PROGRESS, updatedItem.getItemStatus());
     }
 
     @Test

@@ -9,6 +9,7 @@ public class ResponseItemDto {
     private Long assignedToItemGroupId;
     private String assignedToItemGroupName;
     private ItemStatus itemStatus;
+    private String duration;
 
     public ResponseItemDto(){
 
@@ -19,6 +20,7 @@ public class ResponseItemDto {
         this.name = name;
         this.description = description;
         this.itemStatus = itemStatus;
+
     }
 
 
@@ -68,5 +70,13 @@ public class ResponseItemDto {
 
     public void setItemStatus(ItemStatus itemStatus) {
         this.itemStatus = itemStatus;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 }

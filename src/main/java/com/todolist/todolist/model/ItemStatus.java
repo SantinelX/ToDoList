@@ -1,5 +1,5 @@
 package com.todolist.todolist.model;
 
 public enum ItemStatus {
-    NOT_STARTED,IN_PROGRES,DONE
+    NOT_STARTED, IN_PROGRESS,DONE
 }

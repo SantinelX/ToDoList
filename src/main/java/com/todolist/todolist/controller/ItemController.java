@@ -9,6 +9,7 @@ import com.todolist.todolist.services.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,8 +43,9 @@ public ResponseItemDto create(@RequestBody RequestItemDto itemDto){
     @PutMapping(path = "/items/{id}")
     public ResponseItemDto updateItem(@PathVariable("id") Long id, @RequestBody RequestItemDto requestItemDto){
         Item updatedItem = updateItemFromRequestItemDto(itemService.findById(id),requestItemDto); // se updateaza obiectul
-        return ResponseUtils.mapItemToResponseIteDto(itemService.save(updatedItem)); // se salveaza obiectul updatat in baza de date si se intoarce inapoi in postman / ui
+        return ResponseUtils.mapItemToResponseIteDto(itemService.save(updatedItem)); // se salveaza obiectul updatat in baza de date si se intoarce inapoi in ui
     }
+
 
     @DeleteMapping(path = "/items/{id}")
     public HttpStatus deleteitem(@PathVariable("id") Long id){
@@ -63,6 +65,19 @@ public ResponseItemDto create(@RequestBody RequestItemDto itemDto){
             dbItem.setName(requestItemDto.getDescription());
         } if(requestItemDto.getItemStatus() != null) {
             dbItem.setItemStatus(requestItemDto.getItemStatus());
+            if(requestItemDto.getItemStatus().equals(ItemStatus.NOT_STARTED)) {
+                dbItem.setStartDate(null);
+                dbItem.setEndDate(null);
+            }
+            if(requestItemDto.getItemStatus().equals(ItemStatus.IN_PROGRESS)) {
+                if (dbItem.getStartDate() == null) {
+                    dbItem.setStartDate(new Date());
+                }
+                dbItem.setEndDate(null);
+            }
+            if(requestItemDto.getItemStatus().equals(ItemStatus.DONE)) {
+                dbItem.setEndDate(new Date());
+            }
         } return dbItem;
     }
 }

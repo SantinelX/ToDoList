@@ -1,5 +1,6 @@
 package com.todolist.todolist.config;
 
+import com.todolist.todolist.exceptions.DatabaseConstrainException;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +22,14 @@ public class ExeceptionControllerAdvice {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorMessage resourceNotFoundException(ConfigDataResourceNotFoundException ex){
 
+        ErrorMessage errorMessage = new ErrorMessage();
+        errorMessage.setMesage(ex.getMessage());
+        return errorMessage;
+    }
+
+    @ExceptionHandler(value ={DatabaseConstrainException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage databaseException(DatabaseConstrainException ex){
         ErrorMessage errorMessage = new ErrorMessage();
         errorMessage.setMesage(ex.getMessage());
         return errorMessage;
